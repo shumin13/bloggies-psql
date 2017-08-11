@@ -1,12 +1,41 @@
-<h1>All Posts by <%= current_user.name %></h1>
+<h1>All Posts by
+  <%= current_user.name %></h1>
+
+<%#= @news_data["articles"] %>
+<ul>
+  <% @news_data['articles'].each do |article| %>
+  <li>
+    <h3><%= article['title'] %></h3>
+    <p><%= article['description'] %></p>
+    <img src="<%= article['urlToImage'] %>"</img>
+
+  </li>
+  <% end %>
+</ul>
 
 <ul>
-<% @all_posts.each_with_index do |post, index| %>
+  <% @all_posts.each do |post| %>
+  <% if post.id  %>
+  <li>
+    <h3><%= post.title %></h3>
+    <p><%= post.content %></p>
+    <%= link_to "view", post_path(post) %>
+    <%= link_to "update", edit_post_path(post) %>
+    <%= link_to "delete", post_path(post), method: :delete %>
 
-
-<li><h3><%= post.title %></h3>
-<p><%= post.content %></p></li>
-
-
-<% end %>
+  </li>
+  <% end %>
+  <% end %>
 </ul>
+
+<%= form_for @new_post do |f| %>
+<%= f.label :title %>
+<%= f.text_field :title %>
+<br>
+<%= f.label :content %>
+<%= f.text_field :content %>
+
+<%= f.hidden_field :user_id %>
+<br>
+<%= f.submit %>
+<% end %>
