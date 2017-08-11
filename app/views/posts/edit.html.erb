@@ -1,3 +1,4 @@
+<% provide(:title, "Edit Post: #{@current_post.id}") %>
 <%= form_for @current_post do |f| %>
 <%= f.label :title %>
 <%= f.text_field :title %>
